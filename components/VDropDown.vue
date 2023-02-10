@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="a" :class="{ active: isOpen }" @click="isOpen = !isOpen">{{ title }}</div>
+    <div class="a" :class="{ active: visible }" @click="open">{{ title }}</div>
 
     <transition name="fade">
-      <div v-if="isOpen" class="wrapper">
+      <div v-if="visible" class="wrapper">
         <div class="dropdown">
-          <router-link v-for="(link, i) in links" :key="i" active-class="active" :to="link.url">
-            {{ link.text }}
+          <router-link v-for="link in links" :key="link.folderId" active-class="active" :to="link.folderPath">
+            {{ link.name }}
           </router-link>
         </div>
       </div>
@@ -25,19 +25,45 @@ export default {
       type: Array,
       default: () => [],
     },
+    id: {
+      type: String,
+      default: null,
+      require: true,
+    },
   },
-  data() {
-    return {
-      isOpen: false,
+  created() {
+    this.index = this.dropdown.count++
+  },
+  mounted() {
+    if (this.isSamePath()) {
+      this.dropdown.active = this.index
     }
   },
+  inject: ['dropdown'],
+  computed: {
+    visible() {
+      return this.index === this.dropdown.active
+    },
+  },
+  methods: {
+    open() {
+      if (this.visible) {
+        this.dropdown.active = null
+      } else {
+        this.dropdown.active = this.index
+      }
+    },
+    isSamePath() {
+      return this.links.some(({ folderPath }) => {
+        return decodeURIComponent(this.$route.path) === folderPath
+      })
+    },
+  },
   watch: {
-    '$route.path': {
-      handler(path) {
-        if (this.links.some(({ url }) => path.includes(url))) this.isOpen = true
-        else this.isOpen = false
-      },
-      immediate: true,
+    '$route.path'() {
+      if (this.isSamePath()) {
+        this.dropdown.active = this.index
+      }
     },
   },
 }
@@ -57,6 +83,7 @@ export default {
 
 .wrapper {
   overflow: hidden;
+  will-change: max-height;
 }
 </style>
 
@@ -64,7 +91,7 @@ export default {
 .fade-enter-active,
 .fade-leave-active {
   transition: all 0.5s;
-  max-height: 230px;
+  max-height: 150px;
 }
 .fade-enter,
 .fade-leave-to {

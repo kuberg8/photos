@@ -1,6 +1,6 @@
 <template>
   <main class="main">
-    <VMenu />
+    <VMenu :folders="folders" />
     <Nuxt />
   </main>
 </template>
@@ -15,17 +15,26 @@ export default {
   mounted() {
     this.setAnimation()
     this.$root.setAnimation = this.setAnimation
+
+    this.$axios.$get('/files?type=folder').then((data) => {
+      this.folders = this.getFolderStructure(data)
+    })
+  },
+  data() {
+    return {
+      folders: [],
+    }
   },
   methods: {
-    setAnimation() {
-      const blocks = document.querySelectorAll('.block')
+    setAnimation(el) {
+      const blocks = el ? [el] : document.querySelectorAll('.block')
 
       blocks.forEach((block) => {
         let exptl = this.$gsap.timeline({
           scrollTrigger: {
             trigger: block,
-            start: 'top 95%',
-            end: 'top 90%',
+            start: 'top 90%',
+            end: 'top 95%',
             scrub: 2,
             markers: false, // true for dev mode
           },
@@ -37,6 +46,18 @@ export default {
           duration: 1,
         })
       })
+    },
+    getFolderStructure(array = []) {
+      return array
+        .map((folder) => ({ ...folder, name: folder.name?.replaceAll('_', ' ') }))
+        .reduce((tree, folder, i, mapedArray) => {
+          folder.children = mapedArray.filter((childFolder) => {
+            return childFolder.folderPath.includes(folder.folderPath) && folder.folderId !== childFolder.folderId
+          })
+          tree.push(folder)
+          return tree
+        }, [])
+        .filter((folder) => !!folder.children.length || folder.folderPath.split('/').length < 3)
     },
   },
 }

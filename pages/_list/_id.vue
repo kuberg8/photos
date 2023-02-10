@@ -1,22 +1,27 @@
 <template>
+  <!-- TODO: Предусмотреть отрытие альбома без родителя(списка папок) -->
   <div>
-    <VIntro title="Lyuba & Marat" :image="back" />
+    <VIntro v-if="cover" :title="albomName" :image="cover" />
 
     <div class="grid">
-      <!-- TODO: добалять tall-panel в зависимости от размеров картинки -->
-      <img
-        v-for="(i, index) in 23"
+      <nuxt-img
+        v-for="(image, index) in photos"
         :key="index"
-        :src="getRandomImage()"
+        :src="image.url"
         class="block"
+        quality="1"
+        format="webp"
+        :class="{ 'tall-panel': image.height > image.width }"
+        loading="lazy"
         @click="imageIndex = index"
-        :class="{ 'tall-panel': getRandomNum() == 2 }"
+        @load="load"
       />
     </div>
 
     <VModal
+      v-if="typeof imageIndex === 'number'"
       :imageIndex="imageIndex"
-      :images="['/example.jpeg', '/back.jpeg']"
+      :images="photosUrl"
       @next="imageIndex++"
       @prev="imageIndex--"
       @close="imageIndex = null"
@@ -28,29 +33,35 @@
 import VIntro from '~/components/VIntro.vue'
 import VModal from '~/components/VModal.vue'
 
-import back from '~/static/back.jpeg'
-
 export default {
   components: {
     VModal,
-    VIntro
+    VIntro,
   },
   data() {
     return {
-      back,
       imageIndex: null,
+      photos: [],
+      cover: null,
     }
   },
   mounted() {
-    this.$root.setAnimation && this.$root.setAnimation()
+    this.$axios.$get(`/files?path=${decodeURIComponent(this.$route.path)}`).then(([cover, ...photos]) => {
+      this.cover = cover.url
+      this.photos = photos
+    })
+  },
+  computed: {
+    photosUrl() {
+      return this.photos.map(({ url }) => url)
+    },
+    albomName() {
+      return decodeURIComponent(this.$route.path)?.split('/')?.at(-1)?.replaceAll('_', ' ')
+    },
   },
   methods: {
-    getRandomNum() {
-      return Math.floor(Math.random() * (2 - 1 + 1)) + 1
-    },
-    getRandomImage() {
-      const num = this.getRandomNum()
-      return num == 2 ? '/example.jpeg' : '/back.jpeg'
+    load({ target }) {
+      this.$root.setAnimation(target)
     },
   },
 }
@@ -60,7 +71,7 @@ export default {
 .grid {
   display: grid;
   margin: 0 auto;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-auto-rows: minmax(50px, auto);
   padding: 50px;
   gap: 50px;
@@ -71,6 +82,7 @@ export default {
 
   img {
     cursor: pointer;
+    // animation: translateY 1s;
   }
 }
 </style>

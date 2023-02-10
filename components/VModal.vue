@@ -2,10 +2,17 @@
   <transition name="page">
     <div v-if="imageIndex || imageIndex == 0" class="modal">
       <transition-group name="fade">
-        <img v-show="i === imageIndex" v-for="(item, i) in images" :key="i" :src="item" class="img" />
+        <nuxt-img
+          v-show="item === images[imageIndex]"
+          v-for="(item, i) in trimImages"
+          :key="i"
+          :src="item"
+          quality="90"
+          class="img"
+        />
       </transition-group>
 
-      <div @click="$emit('prev')" class="button prev">
+      <div v-if="!isFirstImage" @click="prevImg" class="button prev">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="27" viewBox="0 0 16 27">
           <path
             stroke="none"
@@ -15,7 +22,7 @@
         </svg>
       </div>
 
-      <div @click="$emit('next')" class="button next">
+      <div v-if="!isLastImage" @click="nextImg" class="button next">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="27" viewBox="0 0 16 27">
           <path
             stroke="none"
@@ -54,7 +61,41 @@ export default {
       type: Array,
       default: () => [],
     },
-    imageIndex: Number,
+    imageIndex: {
+      type: Number,
+      default: null,
+      require: true,
+    },
+  },
+  data() {
+    const leftNumber = this.imageIndex === 0 ? 0 : this.imageIndex - 1
+    const rightNumber = this.imageIndex === this.images.length - 1 ? this.images.length : this.imageIndex + 1
+
+    return {
+      leftNumber,
+      rightNumber,
+    }
+  },
+  methods: {
+    prevImg() {
+      this.$emit('prev')
+      this.leftNumber > 0 && this.rightNumber--
+    },
+    nextImg() {
+      this.$emit('next')
+      this.rightNumber < this.images.length - 1 && this.rightNumber++
+    },
+  },
+  computed: {
+    isFirstImage() {
+      return this.imageIndex === 0
+    },
+    isLastImage() {
+      return this.imageIndex === this.images.length - 1
+    },
+    trimImages() {
+      return this.images.slice(this.leftNumber, this.rightNumber + 1)
+    },
   },
 }
 </script>

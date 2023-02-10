@@ -31,20 +31,14 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: ['@nuxtjs/google-fonts', 'nuxt-gsap-module'],
+  buildModules: ['@nuxtjs/google-fonts', 'nuxt-gsap-module', '@nuxt/image'],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ['@nuxtjs/axios'],
 
   axios: {
     baseURL: process.env.BASE_API_URL,
-    // proxyHeaders: false,
-    // credentials: false,
     headers: {
-      // 'Access-Control-Allow-Origin': '*',
-      // 'Access-Control-Allow-Methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
-      // 'Access-Control-Allow-Headers': 'Content-Type, Accept',
-      // Authorization: `Basic ${process.env.PRIVAT_KEY}`,
       common: {
         Accept: 'application/json',
       },
@@ -69,4 +63,8 @@ export default {
       scrollTo: true,
     },
   },
+
+  image: {
+    domains: ['ik.imagekit.io']
+  }
 }
