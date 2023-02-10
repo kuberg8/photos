@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <VIntro title="Natasha" :image="main" align-items="center" />
+    <VIntro title="indie - фотография" :image="main" align-items="center" />
 
     <div class="container">
       <div class="block">
@@ -9,36 +9,37 @@
 
       <hr class="block" />
 
-      <!-- будет браться из приходящих папок первые 4 -->
-      <div class="block">карточки</div>
+      <div class="block grid">
+        <nuxt-link v-for="(item, i) in services" :key="i" :to="item.folderPath">{{ item.name }}</nuxt-link>
+      </div>
 
       <hr class="block" />
 
       <div class="block form">
-        <VCard :withGradient="false" image="example.jpeg" />
+        <div>
+          <VCard :withGradient="false" image="images/admin.jpg" style="max-height: 500px" />
+        </div>
 
         <div class="info">
-          <h1>КАК НАПИСАТЬ НАМ<br />ИЛИ ЗАДАТЬ ЛЮБОЙ ВОПРОС:</h1>
+          <h1>КАК НАПИСАТЬ<br />ИЛИ ЗАДАТЬ ЛЮБОЙ ВОПРОС:</h1>
 
           <div>
             <b>TELEGRAM, WHAT'S APP И ЗВОНКИ</b>
-            <div>
-              8(999) 582 07 36 - Алексей Шульгин<br />@PAULINA.SHULGINA И @ALEXEY.SHULGIN - Соцсеть с доступом через VPN
-            </div>
+            <div>+7 (952) 522 27-71 - Наталья Епимахова<br />@EPIMAHOVA_NATALIA - Соцсеть с доступом через VPN</div>
           </div>
 
           <div>
             <b>ДРУГИЕ СЕРВИСЫ</b>
-            <div>boosty.to/shulginy - аккаунт BOOSTY</div>
+            <div>boosty.to/shulginy - аккаунт BOOSTY ???</div>
           </div>
 
-          <form @submit.prevent="() => {}" class="content">
+          <form action="https://formspree.io/f/mgebazak" class="content" method="POST">
             <div class="fields">
               <VInput v-model="name" name="name" placeholder="Ваше имя*" />
               <VInput v-model="phone" mask="+7 ### ### ##-##" name="phone" placeholder="Номер телефона*" />
-              <VSelect v-model="askType" placeholder="Тип вопроса*" :options="asksOptions" />
+              <VSelect v-model="askType" name="askType" placeholder="Тип вопроса*" :options="asksOptions" />
               <VInput v-model="city" name="city" placeholder="Город*" />
-              <VSelect v-model="workType" placeholder="Вид съемки*" :options="workOptions" />
+              <VSelect v-model="workType" name="workType" placeholder="Вид съемки*" :options="workOptions" />
             </div>
 
             <button type="submit" :disabled="!formValid"><i> Отправить </i></button>
@@ -53,7 +54,7 @@
       <div class="block content">
         <i>Чат в Telegram</i>
         <h1>
-          <a href="https://telegram.me/kuberg" target="_blank">@Kuberg</a>
+          <a href="https://telegram.me/natata_lia" target="_blank">@natata_lia</a>
         </h1>
         <small>
           Советуем подписаться: это остаётся самым стабильным способом первыми видеть обновления и следить за нашим
@@ -65,6 +66,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import VIntro from '~/components/VIntro.vue'
 import VInput from '~/components/VInput.vue'
 import VSelect from '~/components/VSelect.vue'
@@ -91,14 +93,21 @@ export default {
       workType: '',
 
       asksOptions: ['Занятость даты', 'Бронирование', 'Мне просто спросить', 'Другое'],
-      // будет браться из приходящих папок
-      workOptions: ['Репортаж', 'Портретная', 'Парная', 'Свадебная'],
     }
   },
   mounted() {
     this.$root.setAnimation && this.$root.setAnimation()
   },
+  head() {
+    return {
+      title: 'Главная',
+    }
+  },
   computed: {
+    ...mapState(['services']),
+    workOptions() {
+      return this.services.map(({ name }) => name)
+    },
     formValid() {
       return !!this.name && !!this.phone && !!this.city && !!this.askType && !!this.workType
     },
@@ -155,16 +164,11 @@ export default {
     }
   }
 
-  .banner {
-    margin-top: 100px;
-    min-height: 423px;
-    padding: 0 20%;
-
-    .content {
-      display: flex;
-      flex-direction: column;
-      row-gap: 20px;
-    }
+  .grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    column-gap: 50px;
   }
 }
 </style>

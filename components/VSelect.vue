@@ -5,6 +5,7 @@
     :class="{ error: touched && !inputValue, open: isOpen }"
     @click="toggle"
   >
+    <input v-model="inputValue" :name="name" hidden />
     <div>
       <div v-if="!!inputValue" class="elipsis">
         {{ inputValue }}
@@ -41,6 +42,10 @@ export default {
       default: () => [],
     },
     placeholder: {
+      type: String,
+      default: '',
+    },
+    name: {
       type: String,
       default: '',
     },

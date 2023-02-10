@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import VMenu from '~/components/VMenu.vue'
 
 export default {
@@ -18,6 +19,7 @@ export default {
 
     this.$axios.$get('/files?type=folder').then((data) => {
       this.folders = this.getFolderStructure(data)
+      this.SET_SERVICES(this.folders)
     })
   },
   data() {
@@ -26,6 +28,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['SET_SERVICES']),
     setAnimation(el) {
       const blocks = el ? [el] : document.querySelectorAll('.block')
 

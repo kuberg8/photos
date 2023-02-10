@@ -1,7 +1,7 @@
 <template>
   <!-- TODO: Предусмотреть отрытие альбома без родителя(списка папок) -->
   <div>
-    <VIntro v-if="cover" :title="albomName" :image="cover" />
+    <VIntro v-if="cover" :title="cover.customMetadata.albom" :image="cover.url" />
 
     <div class="grid">
       <nuxt-img
@@ -12,10 +12,10 @@
         quality="1"
         format="webp"
         :class="{ 'tall-panel': image.height > image.width }"
-        loading="lazy"
         @click="imageIndex = index"
         @load="load"
       />
+        <!-- loading="lazy" -->
     </div>
 
     <VModal
@@ -33,6 +33,7 @@
 import VIntro from '~/components/VIntro.vue'
 import VModal from '~/components/VModal.vue'
 
+
 export default {
   components: {
     VModal,
@@ -46,18 +47,20 @@ export default {
     }
   },
   mounted() {
-    this.$axios.$get(`/files?path=${decodeURIComponent(this.$route.path)}`).then(([cover, ...photos]) => {
-      this.cover = cover.url
+    this.$axios.$get(`/files?format=webp&path=${decodeURIComponent(this.$route.path)}`).then(([cover, ...photos]) => {
+      this.cover = cover
       this.photos = photos
     })
   },
   computed: {
     photosUrl() {
       return this.photos.map(({ url }) => url)
-    },
-    albomName() {
-      return decodeURIComponent(this.$route.path)?.split('/')?.at(-1)?.replaceAll('_', ' ')
-    },
+    }
+  },
+  head() {
+    return {
+      title: 'альбом | ' + this.cover?.customMetadata?.albom
+    }
   },
   methods: {
     load({ target }) {
@@ -82,7 +85,7 @@ export default {
 
   img {
     cursor: pointer;
-    // animation: translateY 1s;
+    // background: grey;
   }
 }
 </style>

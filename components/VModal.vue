@@ -7,54 +7,29 @@
           v-for="(item, i) in trimImages"
           :key="i"
           :src="item"
-          quality="90"
+          quality="10"
+          format="webp"
           class="img"
         />
       </transition-group>
 
       <div v-if="!isFirstImage" @click="prevImg" class="button prev">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="27" viewBox="0 0 16 27">
-          <path
-            stroke="none"
-            d="M2815,1141.13l-13.86,12.86-2.13-2.13,11.78-10.93-11.79-11.8,2.13-2.13,13.86,13.86-0.13.14Z"
-            transform="translate(-2799 -1127)"
-          />
-        </svg>
+        <img :src="svgArrow" class="svg" />
       </div>
 
       <div v-if="!isLastImage" @click="nextImg" class="button next">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="27" viewBox="0 0 16 27">
-          <path
-            stroke="none"
-            d="M2815,1141.13l-13.86,12.86-2.13-2.13,11.78-10.93-11.79-11.8,2.13-2.13,13.86,13.86-0.13.14Z"
-            transform="translate(-2799 -1127)"
-          />
-        </svg>
+        <img :src="svgArrow" class="svg" />
       </div>
 
-      <svg
-        @click="$emit('close')"
-        class="close"
-        xmlns="http://www.w3.org/2000/svg"
-        width="18"
-        height="18"
-        viewBox="0 0 18 18"
-      >
-        <path
-          fill="none"
-          fill-rule="evenodd"
-          stroke="#000"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
-          d="M9 9.5l8-8-8 8-8-8 8 8zm0 0l8 8-8-8-8 8 8-8z"
-        ></path>
-      </svg>
+      <img :src="svgClose" @click="$emit('close')" class="close svg" />
     </div>
   </transition>
 </template>
 
 <script>
+import svgClose from '~/static/images/svg/close.svg'
+import svgArrow from '~/static/images/svg/arrow.svg'
+
 export default {
   props: {
     images: {
@@ -74,6 +49,8 @@ export default {
     return {
       leftNumber,
       rightNumber,
+      svgClose,
+      svgArrow,
     }
   },
   methods: {
@@ -109,6 +86,12 @@ export default {
   height: 100vh;
   background: #fff;
   z-index: 100;
+
+  .svg {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+  }
 
   .img {
     max-height: 90vh;

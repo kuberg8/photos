@@ -4,7 +4,7 @@
       <div class="content">
         <i>Чат в Telegram</i>
         <h1>
-          <a href="https://telegram.me/kuberg" target="_blank">@Kuberg</a>
+          <a href="https://telegram.me/natata_lia" target="_blank">@natata_lia</a>
         </h1>
         <small> Подпишитесь, чтобы видеть обновления чаще, чем в других соцсетях </small>
       </div>
@@ -12,19 +12,18 @@
 
     <div class="grid block">
       <div class="item">
-        <h2>Наши контакты</h2>
+        <h2>Контакты</h2>
 
         <div>
-          Вы можете связаться с нами любым удобным способом: в социальной сети, мессенджере или с помощью телефонного
-          звонка. Почти все вопросы мы решаем равнозначно, но если вас интересует конкретная информация по занятости дат
-          и бронированию - Алексей обладает большей компетенцией. И чаще проверяет сообщения.
+          Вы можете связаться со мной любым удобным способом: в социальной сети, мессенджере или с помощью телефонного
+          звонка. Почти все вопросы я решаю равнозначно.
         </div>
 
         <div>
           <b>ТЕЛЕФОН И МЕССЕНДЖЕРЫ</b>
           <div class="col">
-            <small>+7 999 582 07 36 (Алексей)</small>
-            <small>+7 999 584 37 28 (Полина)</small>
+            <small>+7 (952) 522 27-71 (Наталья)</small>
+            <!-- <small>+7 999 584 37 28 (Полина)</small> -->
             <small>Telegram, What's App</small>
           </div>
         </div>
@@ -32,9 +31,7 @@
         <div>
           <b>СОЦИАЛЬНЫЕ СЕТИ И СТРАНИЦЫ:</b>
           <div class="col">
-            <small>VK: @shulgina_wed (Полина)</small>
-            <small>@shulgin_wed (Алексей)</small>
-            <small>Канал Telegram: paulinashulgina</small>
+            <small>VK: @??</small>
           </div>
         </div>
       </div>
@@ -42,11 +39,12 @@
       <div class="item">
         <h2>Написать напрямую</h2>
 
-        <form @submit.prevent="() => {}" class="form">
+        <form action="https://formspree.io/f/mgebazak" method="POST" class="form">
           <VInput v-model="name" name="name" placeholder="Ваше имя*" />
+          <VInput v-model="phone" mask="+7 ### ### ##-##" name="phone" placeholder="Номер телефона*" />
           <VTextarea v-model="message" name="message" placeholder="Вопрос или сообщение*" />
           <div>
-            <button type="submit" :disabled="!name || !message">Отправить</button>
+            <button type="submit" :disabled="!name || !message || !phone">Отправить</button>
           </div>
         </form>
       </div>
@@ -68,30 +66,24 @@ export default {
   mounted() {
     this.$root.setAnimation && this.$root.setAnimation()
   },
+  head() {
+    return {
+      title: 'Контакты',
+    }
+  },
   data() {
     return {
       main,
 
       name: '',
       message: '',
+      phone: ''
     }
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.banner {
-  min-height: 423px;
-  padding: 0 40%;
-
-  .content {
-    display: flex;
-    flex-direction: column;
-    row-gap: 20px;
-    animation: translateY 1s;
-  }
-}
-
 .col {
   display: flex;
   flex-direction: column;
