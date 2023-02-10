@@ -1,8 +1,8 @@
 <template>
-  <router-link class="card" :to="link" append>
+  <nuxt-link class="card" :to="link" append>
     <div class="background" :style="{ backgroundImage: backgroundd }" />
     <div class="text">{{ title }}</div>
-  </router-link>
+  </nuxt-link>
 </template>
 
 <script>

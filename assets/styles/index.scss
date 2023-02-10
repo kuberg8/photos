@@ -153,3 +153,33 @@ a.active {
     opacity: 1;
   }
 }
+
+
+// global classes
+.banner {
+  min-height: 423px !important;
+  padding: 0 40%;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    animation: translateY 1s;
+  }
+}
+
+.link {
+  color: #000000;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  padding: 0 25px;
+  border: 1px solid #969696;
+
+  &:hover {
+    opacity: 0.5;
+  }
+}

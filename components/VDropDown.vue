@@ -5,9 +5,9 @@
     <transition name="fade">
       <div v-if="visible" class="wrapper">
         <div class="dropdown">
-          <router-link v-for="link in links" :key="link.folderId" active-class="active" :to="link.folderPath">
+          <nuxt-link v-for="link in links" :key="link.folderId" active-class="active" :to="link.folderPath">
             {{ link.name }}
-          </router-link>
+          </nuxt-link>
         </div>
       </div>
     </transition>
