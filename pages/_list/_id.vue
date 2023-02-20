@@ -12,10 +12,10 @@
         quality="1"
         format="webp"
         :class="{ 'tall-panel': image.height > image.width }"
+        loading="lazy"
         @click="imageIndex = index"
         @load="load"
       />
-        <!-- loading="lazy" -->
     </div>
 
     <VModal
@@ -32,7 +32,6 @@
 <script>
 import VIntro from '~/components/VIntro.vue'
 import VModal from '~/components/VModal.vue'
-
 
 export default {
   components: {
@@ -55,11 +54,11 @@ export default {
   computed: {
     photosUrl() {
       return this.photos.map(({ url }) => url)
-    }
+    },
   },
   head() {
     return {
-      title: 'альбом | ' + this.cover?.customMetadata?.albom
+      title: 'альбом | ' + this.cover?.customMetadata?.albom,
     }
   },
   methods: {
