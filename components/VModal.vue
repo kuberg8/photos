@@ -4,12 +4,12 @@
       <transition-group name="fade">
         <nuxt-img
           v-show="item === images[imageIndex]"
-          v-for="(item, i) in trimImages"
-          :key="i"
+          v-for="item in trimImages"
+          :key="item"
           :src="item"
+          class="img"
           quality="10"
           format="webp"
-          class="img"
         />
       </transition-group>
 

@@ -9,13 +9,13 @@
         :key="index"
         :src="image.url"
         class="block"
-        quality="1"
-        format="webp"
         :class="{ 'tall-panel': image.height > image.width }"
-        loading="lazy"
+        quality="10"
+        format="webp"
         @click="imageIndex = index"
         @load="load"
       />
+        <!-- loading="lazy" -->
     </div>
 
     <VModal
@@ -58,7 +58,7 @@ export default {
   },
   head() {
     return {
-      title: 'альбом | ' + this.cover?.customMetadata?.albom,
+      title: 'Альбом | ' // + this.$route?.params?.id?.replaceAll('_', ' '),
     }
   },
   methods: {
