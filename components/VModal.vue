@@ -2,7 +2,7 @@
   <transition name="page">
     <div v-if="imageIndex || imageIndex == 0" class="modal">
       <transition-group name="fade">
-        <nuxt-img v-show="item === images[imageIndex]" v-for="item in images" :key="item" :src="item" class="img" />
+        <img v-show="item === images[imageIndex]" v-for="item in images" :key="item" :src="item" class="img" />
       </transition-group>
 
       <div v-if="!isFirstImage" @click="prevImg" class="button prev">
@@ -54,7 +54,7 @@ export default {
   methods: {
     prevImg() {
       this.$emit('prev')
-      this.leftNumber > 0 && this.rightNumber--
+      this.leftNumber > 0 && this.leftNumber--
     },
     nextImg() {
       this.$emit('next')

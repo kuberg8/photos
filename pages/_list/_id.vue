@@ -4,7 +4,7 @@
     <VIntro v-if="cover" :title="cover.customMetadata.albom" :image="cover.url" />
 
     <div class="grid">
-      <nuxt-img
+      <img
         v-for="(image, index) in photos"
         :key="index"
         :src="image.url"
@@ -13,17 +13,17 @@
         @click="imageIndex = index"
         @load="load"
       />
+      <!-- loading="lazy" -->
       <!-- format="webp" -->
       <!-- quality="10" -->
-      <!-- loading="lazy" -->
     </div>
 
     <VModal
       v-if="typeof imageIndex === 'number'"
       :imageIndex="imageIndex"
       :images="photosUrl"
-      @next="imageIndex++"
-      @prev="imageIndex--"
+      @next="imageIndex < photosUrl.length - 1 && imageIndex++"
+      @prev="imageIndex > 0 && imageIndex--"
       @close="imageIndex = null"
     />
   </div>
@@ -43,7 +43,7 @@ export default {
       imageIndex: null,
       photos: [],
       cover: null,
-      pageName: ''
+      pageName: '',
     }
   },
   mounted() {
