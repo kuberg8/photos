@@ -6,7 +6,7 @@
         <h1>
           <a href="https://telegram.me/natata_lia" target="_blank">@natata_lia</a>
         </h1>
-        <small> Подпишитесь, чтобы видеть обновления чаще, чем в других соцсетях </small>
+        <!-- <small> Подпишитесь, чтобы видеть обновления чаще, чем в других соцсетях </small> -->
       </div>
     </VIntro>
 
@@ -28,12 +28,12 @@
           </div>
         </div>
 
-        <div>
+        <!-- <div>
           <b>СОЦИАЛЬНЫЕ СЕТИ И СТРАНИЦЫ:</b>
           <div class="col">
             <small>VK: @??</small>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <div class="item">
@@ -56,7 +56,7 @@
 import VInput from '~/components/VInput.vue'
 import VTextarea from '~/components/VTextarea.vue'
 
-import main from '~/static/main.jpeg'
+import main from '~/static/main.jpg'
 
 export default {
   components: {

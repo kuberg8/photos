@@ -28,10 +28,10 @@
             <div>+7 (952) 522 27-71 - Наталья Епимахова<br />@EPIMAHOVA_NATALIA - Соцсеть с доступом через VPN</div>
           </div>
 
-          <div>
+          <!-- <div>
             <b>ДРУГИЕ СЕРВИСЫ</b>
             <div>boosty.to/shulginy - аккаунт BOOSTY ???</div>
-          </div>
+          </div> -->
 
           <form action="https://formspree.io/f/mgebazak" class="content" method="POST">
             <div class="fields">
@@ -56,10 +56,10 @@
         <h1>
           <a href="https://telegram.me/natata_lia" target="_blank">@natata_lia</a>
         </h1>
-        <small>
+        <!-- <small>
           Советуем подписаться: это остаётся самым стабильным способом первыми видеть обновления и следить за нашим
           творчеством. И его ещё никто не запретил!
-        </small>
+        </small> -->
       </div>
     </VIntro>
   </div>
@@ -72,7 +72,7 @@ import VInput from '~/components/VInput.vue'
 import VSelect from '~/components/VSelect.vue'
 import VCard from '~/components/VCard.vue'
 
-import main from '~/static/main.jpeg'
+import main from '~/static/main.jpg'
 
 export default {
   name: 'IndexPage',

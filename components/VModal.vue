@@ -2,15 +2,7 @@
   <transition name="page">
     <div v-if="imageIndex || imageIndex == 0" class="modal">
       <transition-group name="fade">
-        <nuxt-img
-          v-show="item === images[imageIndex]"
-          v-for="item in trimImages"
-          :key="item"
-          :src="item"
-          class="img"
-          quality="10"
-          format="webp"
-        />
+        <nuxt-img v-show="item === images[imageIndex]" v-for="item in images" :key="item" :src="item" class="img" />
       </transition-group>
 
       <div v-if="!isFirstImage" @click="prevImg" class="button prev">
@@ -42,6 +34,12 @@ export default {
       require: true,
     },
   },
+  mounted() {
+    window.addEventListener('keydown', this.handleKeyPress)
+  },
+  beforeDestroy() {
+    window.removeEventListener('keydown', this.handleKeyPress)
+  },
   data() {
     const leftNumber = this.imageIndex === 0 ? 0 : this.imageIndex - 1
     const rightNumber = this.imageIndex === this.images.length - 1 ? this.images.length : this.imageIndex + 1
@@ -62,6 +60,19 @@ export default {
       this.$emit('next')
       this.rightNumber < this.images.length - 1 && this.rightNumber++
     },
+    handleKeyPress({ key }) {
+      switch (key) {
+        case 'ArrowRight':
+          this.nextImg()
+          break
+        case 'ArrowLeft':
+          this.prevImg()
+          break
+        case 'Escape':
+          this.$emit('close')
+          break
+      }
+    },
   },
   computed: {
     isFirstImage() {
@@ -70,9 +81,9 @@ export default {
     isLastImage() {
       return this.imageIndex === this.images.length - 1
     },
-    trimImages() {
-      return this.images.slice(this.leftNumber, this.rightNumber + 1)
-    },
+    // trimImages() {
+    //   return this.images.slice(this.leftNumber, this.rightNumber + 1)
+    // },
   },
 }
 </script>
@@ -103,6 +114,7 @@ export default {
     left: 0;
     right: 0;
     margin: auto;
+    user-select: none;
   }
 
   .close {

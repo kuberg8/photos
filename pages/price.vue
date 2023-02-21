@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import price from '~/static/images/price.jpeg'
+import price from '~/static/images/price.jpg'
 import VIntro from '~/components/VIntro.vue'
 
 export default {

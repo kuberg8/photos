@@ -1,6 +1,6 @@
 <template>
   <!-- TODO: Предусмотреть отрытие альбома без родителя(списка папок) -->
-  <div>
+  <div л>
     <VIntro v-if="cover" :title="cover.customMetadata.albom" :image="cover.url" />
 
     <div class="grid">
@@ -10,12 +10,12 @@
         :src="image.url"
         class="block"
         :class="{ 'tall-panel': image.height > image.width }"
-        quality="10"
-        format="webp"
         @click="imageIndex = index"
         @load="load"
       />
-        <!-- loading="lazy" -->
+      <!-- format="webp" -->
+      <!-- quality="10" -->
+      <!-- loading="lazy" -->
     </div>
 
     <VModal
@@ -43,9 +43,11 @@ export default {
       imageIndex: null,
       photos: [],
       cover: null,
+      pageName: ''
     }
   },
   mounted() {
+    this.pageName = this.$route?.params?.id?.replaceAll('_', ' ')
     this.$axios.$get(`/files?format=webp&path=${decodeURIComponent(this.$route.path)}`).then(([cover, ...photos]) => {
       this.cover = cover
       this.photos = photos
@@ -58,7 +60,7 @@ export default {
   },
   head() {
     return {
-      title: 'Альбом | ' // + this.$route?.params?.id?.replaceAll('_', ' '),
+      title: `Альбом | ${this.pageName}`,
     }
   },
   methods: {
