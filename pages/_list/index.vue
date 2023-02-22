@@ -1,6 +1,6 @@
 <template>
   <div class="grid">
-    <VCard v-for="i in 18" :key="i" image="example.jpeg" title="Леша" link="detail" />
+    <VCard v-for="i in 18" :key="i" image="images/admin.jpg" title="Леша" link="detail" />
   </div>
 </template>
 

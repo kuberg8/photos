@@ -10,6 +10,7 @@
     "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
+    "@nuxt/image": "^0.7.1",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/google-fonts": "^2.0.0",
     "core-js": "^3.25.3",
@@ -24,7 +25,6 @@
     "vue-template-compiler": "^2.7.10"
   },
   "devDependencies": {
-    "@nuxt/image": "^0.7.1",
     "push-dir": "^0.4.1"
   }
 }
